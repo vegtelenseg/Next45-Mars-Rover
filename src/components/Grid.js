@@ -2,7 +2,7 @@ import React from 'react';
 import Cell from './Cell';
 
 const styles = {
-  backgroundColor: "yellow",
+  backgroundColor: "grey",
   textAlign: "center",
   top: "50%",
   position: "absolute",
@@ -26,11 +26,11 @@ export default class Grid extends React.Component {
           y = 0;
           while(y < thresholdY) {
             cells.push(
-              <Cell key={x + "" + y} id={x + "" + y}/>
+              <Cell key={Math.random()} id={x + "" + y}/>
             )
             y++;
             {
-              y < thresholdY && cells.push(<br/>)
+              y === thresholdY && cells.push(<br/>)
             }
           }
           x++;
