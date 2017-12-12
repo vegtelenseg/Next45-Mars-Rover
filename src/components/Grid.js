@@ -12,29 +12,51 @@ const styles = {
 
 export default class Grid extends React.Component {
 
+		constructor(props) {
+			super(props)
+			this.state = {
+				roverX: 0,
+				roverY:0,
+				roverFace: props.roverFace,
+				commands: props.commands
+			}
+		}
     clickHandler({ col, row, cellName, cellValue }) {
         // ...
     }
 
+
+
     render() {
-        let x = 0,
-            y = 0,
-            thresholdX = this.props.sizeX,
-            thresholdY = this.props.sizeY;
+			console.log("Rover face: ", this.props.roverFace);
+        let x = 1,
+            y = 1,
+            thresholdX = this.props.sizeY,
+            thresholdY = this.props.sizeX;
         let cells = [];
-        while (x < thresholdX) {
-          y = 0;
-          while(y < thresholdY) {
+        while (x <= thresholdX) {
+          y = 1;
+          while(y <= thresholdY) {
             cells.push(
-              <Cell key={Math.random()} id={x + "" + y}/>
+              <Cell
+								key={x + "" + y}
+								id={x + "" + y}
+								roverX={this.props.roverX}
+								roverY={this.props.roverY}
+								roverFace={this.props.roverFace}
+								commands={this.props.commands}
+								cellX={x}
+								cellY={y}
+
+							/>
             )
-            y++;
-            {
-              y === thresholdY && cells.push(<br/>)
-            }
+            ++y > thresholdY && cells.push(<br key={Math.random()}/>)
           }
           x++;
         }
-        return <div style={styles}>{cells}</div>
+        return <div style={styles}>
+					{cells}
+
+				</div>
     }
 }
