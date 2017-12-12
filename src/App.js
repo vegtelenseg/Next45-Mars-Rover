@@ -24,8 +24,8 @@ class App extends Component {
 
   setRoverCoords = e => {
     this.setState({
-      roverX: parseInt(e.target.value.charAt(0), 10),
-      roverY: parseInt(e.target.value.charAt(1), 10)
+      roverX: parseInt(e.target.value.charAt(1), 10),
+      roverY: parseInt(e.target.value.charAt(0), 10)
     })
   }
 
@@ -40,7 +40,7 @@ class App extends Component {
 	componentWillReceiveProps(nextProps){
 		console.log("componentWillReceiveProps: ");
 	}
-	start = function * (e)  {
+	start = (e) => {
 		let commands = this.state.commands
     let i = -1;
 		for (let char of commands) {
@@ -52,7 +52,7 @@ class App extends Component {
           this.turn('right')
           break;
 				 case 'm':
-		      yield this.move(this.state.roverFace)
+		      this.move(this.state.roverFace)
 					break;
 				default:
 					break;
@@ -89,30 +89,31 @@ class App extends Component {
 	move = (roverFace = 'N') => {
     let roverX = this.state.roverX
     let roverY = this.state.roverY
-    let overFlowX = roverX > this.state.gridSizeX || roverX < 1
-    let overFlowY = roverY >  this.state.gridSizeY || roverY < 1
+    let overFlowX = roverX + 1 > this.state.gridSizeX || roverX < 1
+    let overFlowY = roverY + 1 >  this.state.gridSizeY || roverY < 1
     switch (roverFace) {
       case 'N':
         this.setState({
-          roverY: overFlowY ? 1 : roverY - 1,
+          roverX: overFlowX ? 1 : roverX - 1,
         })
         break;
       case 'W' :
         this.setState({
-          roverX: overFlowX ? 1 : roverX - 1,
-        })
-      case 'S': overFlowY ? 1 :
-        this.setState({
-          roverY: overFlowY ? 1 : roverY + 1
+          roverY: overFlowY ? 1 : roverY - 1,
         })
         break;
-      case 'E':
+      case 'S':
         this.setState({
           roverX: overFlowX ? 1 : roverX + 1
         })
         break;
+      case 'E':
+        this.setState({
+          roverY: overFlowY ? 1 : roverY + 1
+        })
+        break;
       default:
-
+        break;
     }
 	}
 
@@ -138,7 +139,7 @@ class App extends Component {
 					this.state.gridSizeX &&
 					this.state.gridSizeY ?
 					<input type="submit" value="start" onClick={
-              (e) => this.start(e).next()
+              (e) => this.start(e)
             }
           />:
 					<div>Fill In All Fields</div>

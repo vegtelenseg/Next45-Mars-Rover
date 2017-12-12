@@ -7,7 +7,7 @@ const styles = {
   top: "50%",
   left: "50%",
   position: "absolute",
-  transform: "translate(-50%, -50%) "
+  transform: "translate(-50%, -50%)"
 }
 
 export default class Grid extends React.Component {
@@ -31,8 +31,8 @@ export default class Grid extends React.Component {
 			console.log("Rover face: ", this.props.roverFace);
         let x = 1,
             y = 1,
-            thresholdX = this.props.sizeY,
-            thresholdY = this.props.sizeX;
+            thresholdX = this.props.sizeX,
+            thresholdY = this.props.sizeY;
         let cells = [];
         while (x <= thresholdX) {
           y = 1;
