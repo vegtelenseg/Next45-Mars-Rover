@@ -32,8 +32,7 @@ export default class Cell extends React.Component {
 	  	)
 		}
 		else {
-			return <div style={styles}>
-			</div>
+			return <div style={styles}></div>
 		}
 	}
 }

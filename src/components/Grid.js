@@ -5,9 +5,9 @@ const styles = {
   backgroundColor: "grey",
   textAlign: "center",
   top: "50%",
-  position: "absolute",
   left: "50%",
-  transform: "translate(-50%, -50%)"
+  position: "absolute",
+  transform: "translate(-50%, -50%) "
 }
 
 export default class Grid extends React.Component {
@@ -54,9 +54,6 @@ export default class Grid extends React.Component {
           }
           x++;
         }
-        return <div style={styles}>
-					{cells}
-
-				</div>
+        return <div style={styles}>{cells}</div>
     }
 }

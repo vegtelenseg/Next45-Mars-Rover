@@ -10,7 +10,7 @@ class App extends Component {
       gridSizeY: 0,
       roverX: 0,
       roverY: 0,
-      roverFace: 'W',
+      roverFace: '',
       commands: ""
     }
   }
@@ -40,57 +40,80 @@ class App extends Component {
 	componentWillReceiveProps(nextProps){
 		console.log("componentWillReceiveProps: ");
 	}
-	start = e => {
+	start = function * (e)  {
 		let commands = this.state.commands
+    let i = -1;
 		for (let char of commands) {
-			setTimeout(() => {
-				switch (char) {
-					case 'l':
-						this.turnLeft()
-						break;
-					case 'r':
-						console.log("Turning Right");
-						break;
-					case 'm':
-					this.move()
+	     switch (char) {
+         case 'l':
+          this.turn()
+          break;
+         case 'r':
+          this.turn('right')
+          break;
+				 case 'm':
+		      yield this.move(this.state.roverFace)
 					break;
-					default:
-						break;
-				}
-			}, 2000)
+				default:
+					break;
+			}
 		}
 	}
 
-	turnLeft = () => {
+	turn = (left = 'left') => {
 		switch (this.state.roverFace) {
 			case 'N':
 				this.setState({
-					roverFace:'W'
+					roverFace: left === 'left' ? 'W' : 'E'
 				})
 				break;
 			case 'W':
 				this.setState({
-					roverFace:'S'
+					roverFace:left === 'left' ? 'S' : 'N'
 				})
 				break;
 			case 'S':
 				this.setState({
-					roverFace:'E'
+					roverFace: left === 'left' ? 'E' : 'W'
 				})
 				break;
 			case 'E':
 				this.setState({
-					roverFace:'N'
+					roverFace: left === 'left' ? 'N' : 'S'
 				})
 				break;
 			default:
 				break;
 		}
 	}
-	move = () => {
-		this.setState({
-			roverX: this.state.roverX + 1
-		})
+	move = (roverFace = 'N') => {
+    let roverX = this.state.roverX
+    let roverY = this.state.roverY
+    let overFlowX = roverX > this.state.gridSizeX || roverX < 1
+    let overFlowY = roverY >  this.state.gridSizeY || roverY < 1
+    switch (roverFace) {
+      case 'N':
+        this.setState({
+          roverY: overFlowY ? 1 : roverY - 1,
+        })
+        break;
+      case 'W' :
+        this.setState({
+          roverX: overFlowX ? 1 : roverX - 1,
+        })
+      case 'S': overFlowY ? 1 :
+        this.setState({
+          roverY: overFlowY ? 1 : roverY + 1
+        })
+        break;
+      case 'E':
+        this.setState({
+          roverX: overFlowX ? 1 : roverX + 1
+        })
+        break;
+      default:
+
+    }
 	}
 
   render() {
@@ -114,7 +137,10 @@ class App extends Component {
 					this.state.commands &&
 					this.state.gridSizeX &&
 					this.state.gridSizeY ?
-					<input type="submit" value="start" onClick={(e) => this.start(e)} />:
+					<input type="submit" value="start" onClick={
+              (e) => this.start(e).next()
+            }
+          />:
 					<div>Fill In All Fields</div>
 				}
       </div>
