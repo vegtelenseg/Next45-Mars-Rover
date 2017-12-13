@@ -7,14 +7,14 @@ const roverFaceStyle = {
 	transform: "translate(-50%, -50%)"
 }
 
-const hasRover = (roverX, roverY, roverFace, cellX, cellY) => (roverX === cellX && roverY === cellY)
+const hasRover = (roverX, roverY, roverFace, cellX, cellY) =>
+	(roverX === cellX && roverY === cellY)
 
-export default class Cell extends React.Component {
+const Cell = ({roverX, roverY, roverFace, cellX, cellY}) => {
 
-	render () {
-		const {roverX, roverY, roverFace, cellX, cellY} = this.props
 		const styles = {
-			backgroundColor :  hasRover(roverX, roverY, roverFace, cellX, cellY) ? "red" : "white",
+			backgroundColor :
+				hasRover(roverX, roverY, roverFace, cellX, cellY) ? "red" : "white",
 			border: "1px solid black",
 			position: "relative",
 			display: "inline-block",
@@ -34,5 +34,6 @@ export default class Cell extends React.Component {
 		else {
 			return <div style={styles}></div>
 		}
-	}
 }
+
+export default Cell;

@@ -6,12 +6,12 @@ class App extends Component {
   constructor () {
     super();
     this.state = {
-      gridSizeX: 0,
-      gridSizeY: 0,
-      roverX: 0,
-      roverY: 0,
-      roverFace: '',
-      commands: ""
+      gridSizeX: 8,
+      gridSizeY: 8,
+      roverX: 4,
+      roverY: 5,
+      roverFace: 'N',
+      commands: "m"
     }
   }
 
@@ -38,11 +38,10 @@ class App extends Component {
   }
 
 	componentWillReceiveProps(nextProps){
-		console.log("componentWillReceiveProps: ");
+		alert("componentWillReceiveProps: ");
 	}
 	start = (e) => {
 		let commands = this.state.commands
-    let i = -1;
 		for (let char of commands) {
 	     switch (char) {
          case 'l':
@@ -60,7 +59,7 @@ class App extends Component {
 		}
 	}
 
-	turn = (left = 'left') => {
+		turn = (left = 'left') => {
 		switch (this.state.roverFace) {
 			case 'N':
 				this.setState({
@@ -89,7 +88,7 @@ class App extends Component {
 	move = (roverFace = 'N') => {
     let roverX = this.state.roverX
     let roverY = this.state.roverY
-    let overFlowX = roverX + 1 > this.state.gridSizeX || roverX < 1
+    let overFlowX = roverX + 2 > this.state.gridSizeX || roverX < 1
     let overFlowY = roverY + 1 >  this.state.gridSizeY || roverY < 1
     switch (roverFace) {
       case 'N':
@@ -120,10 +119,29 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <input type="text" placeholder="Grid Dimensions" onChange={e => this.setGridSize(e)}/>
-        <input type="text" placeholder="Rover Coords" onChange={e => this.setRoverCoords(e)}/>
-        <input type="text" placeholder="Rover Facing Direction" onChange={e => this.setRoverFacingCoords(e)}/>
-        <input type="text" placeholder="Commands" onChange={e => this.setCommands(e)}/>
+        <input
+					type="text"
+					placeholder="Grid Dimensions"
+					onChange={e => this.setGridSize(e)}
+					value={this.state.gridSizeX + "" + this.state.gridSizeY}
+				/>
+        <input
+					type="text"
+					placeholder="Rover Coords"
+					onChange={e => this.setRoverCoords(e)}
+					value={this.state.roverX + "" + this.state.roverY}
+				/>
+        <input
+					type="text"
+					placeholder="Rover Facing Direction"
+					onChange={e => this.setRoverFacingCoords(e)}
+					value={this.state.roverFace}
+				/>
+        <input
+					type="text"
+					placeholder="Commands"
+					onChange={e => this.setCommands(e)}
+				/>
         <Grid
 					sizeX={this.state.gridSizeX}
 					sizeY={this.state.gridSizeY}
@@ -142,7 +160,7 @@ class App extends Component {
               (e) => this.start(e)
             }
           />:
-					<div>Fill In All Fields</div>
+					<div><br/>Fill In All Fields</div>
 				}
       </div>
     );

@@ -21,14 +21,16 @@ export default class Grid extends React.Component {
 				commands: props.commands
 			}
 		}
-    clickHandler({ col, row, cellName, cellValue }) {
-        // ...
-    }
 
-
-
+		componentWillReceiveProps(nextProps) {
+			if (this.props.roverFace !== nextProps.roverFace) {
+				alert("New props " + nextProps.roverFace)
+				this.setState({
+					roverFace: nextProps.roverFace
+				})
+			}
+		}
     render() {
-			console.log("Rover face: ", this.props.roverFace);
         let x = 1,
             y = 1,
             thresholdX = this.props.sizeX,
