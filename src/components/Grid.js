@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Cell from './Cell';
 
 const styles = {
@@ -24,7 +25,6 @@ export default class Grid extends React.Component {
 
 		componentWillReceiveProps(nextProps) {
 			if (this.props.roverFace !== nextProps.roverFace) {
-				alert("New props " + nextProps.roverFace)
 				this.setState({
 					roverFace: nextProps.roverFace
 				})
@@ -59,3 +59,11 @@ export default class Grid extends React.Component {
         return <div style={styles}>{cells}</div>
     }
 }
+Grid.propTypes = {
+  sizeX : PropTypes.number.isRequired,
+  sizeY : PropTypes.number.isRequired,
+  roverX: PropTypes.number.isRequired,
+  roverY: PropTypes.number.isRequired,
+  roverFace: PropTypes.string.isRequired,
+  commands: PropTypes.string.isRequired,
+};
